@@ -1,0 +1,27 @@
+.theme {
+  --background: antiquewhite;
+}
+
+.page {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  background-color: var(--background);
+  transition: 0.3s;
+}
+
+.dark {
+  --background: var(--indigo);
+  --primary: #fff !important;
+  --secondary: #0a0606 !important;
+
+  transition: 0.3s;
+}
+
+.card-dark {
+  --background: var(--gray);
+
+  color: var(--primary);
+  background-color: var(--background);
+  transition: 0.3s;
+}
