@@ -1,18 +1,20 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 
 import './index.css';
 
 import rootReducer from './root-reducer';
-import { increment, decrement } from './root-reducer/reducers';
+import { increment, decrement, async, init, theme } from './root-reducer/reducers';
 
 const counter = document.querySelector('#counter');
 const addBtn = document.querySelector('#add');
 const subBtn = document.querySelector('#sub');
 const asyncBtn = document.querySelector('#async');
 const themeSwitch = document.querySelector('#theme');
+const page = document.querySelector('.page');
 
-
-const store = createStore(rootReducer, 0);
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 addBtn.addEventListener('click', () => {
   store.dispatch(increment());
@@ -23,20 +25,22 @@ subBtn.addEventListener('click', () => {
 });
 
 asyncBtn.addEventListener('click', () => {
-
+  store.dispatch(async());
 });
 
 themeSwitch.addEventListener('click', () => {
-  const page = document.querySelector('.page');
-  const card = document.querySelector('#card');
+  const newTheme = page.classList.contains('light') ? 'dark' : 'light';
 
-  page.classList.toggle('dark');
-  card.classList.toggle('card-dark');
+  store.dispatch(theme(newTheme));
 });
 
 
 store.subscribe(() => {
-  counter.textContent = `Counter: ${store.getState()}`;
+  const state = store.getState();
+
+  counter.textContent = `Counter: ${state.counter}`;
+
+  page.className = `page ${state.theme.value}`
 });
 
-store.dispatch({ type: 'INITIAL_VALUE' });
+store.dispatch(init());
