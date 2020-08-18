@@ -1,1 +1,0 @@
-.theme{--background:#faebd7}.page{display:flex;justify-content:center;margin-top:100px;background-color:var(--background)}.dark,.page{transition:.3s}.dark{--background:var(--indigo);--primary:#fff!important;--secondary:#0a0606!important}.card-dark{--background:var(--gray);color:var(--primary);background-color:var(--background);transition:.3s}
